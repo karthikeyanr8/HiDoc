@@ -1,9 +1,6 @@
 package com.hidoc.consultationtool.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,4 +17,7 @@ public class Doctor {
     private Integer age;
     private String designation;
     private String specialization;
+
+    @Enumerated(EnumType.STRING)
+    private DoctorStatus Status;
 }
