@@ -4,6 +4,7 @@ import com.hidoc.consultationtool.Entity.Doctor;
 import com.hidoc.consultationtool.Repository.DocRepository;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.List;
 
 @Service
@@ -16,10 +17,9 @@ public class FindDocService {
         this.docRepository = docRepository;
     }
 
-    public String findDocById(long Id)
+    public Doctor findDocById(long Id)
     {
         return docRepository.findById(Id)
-                .map(Doctor::getName)
                 .orElseThrow(() -> new RuntimeException("Doctor with this ID is not found!"));
     }
 
@@ -27,12 +27,16 @@ public class FindDocService {
     {
         return docRepository.findByDesignation(designation);
     }
-    public List<String> findAllDoc()
+    public List<Doctor> findAllDoc()
     {
         return docRepository
                 .findAll()
                 .stream()
-                .map(Doctor::getName)
                 .toList();
+    }
+
+    public Doctor saveDoc(Doctor doctor)
+    {
+        return docRepository.save(doctor);
     }
 }
