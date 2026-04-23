@@ -23,7 +23,7 @@ public class FindDocService {
                 .orElseThrow(() -> new RuntimeException("Doctor with this ID is not found!"));
     }
 
-    public List<String> findDocByDesignation(String designation)
+    public List<Doctor> findDocByDesignation(String designation)
     {
         return docRepository.findByDesignation(designation);
     }

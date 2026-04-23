@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface DocRepository extends JpaRepository<Doctor, Long> {
-    List<String> findByDesignation(String designation);
+    List<Doctor> findByDesignation(String designation);
 }

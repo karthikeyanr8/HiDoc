@@ -34,4 +34,9 @@ public class DocController {
     {
         return findDocService.findDocById(Id);
     }
+    @GetMapping("designation/{designation}")
+    public List<Doctor> GetDocByDesignation(@PathVariable String designation)
+    {
+        return findDocService.findDocByDesignation(designation);
+    }
 }
