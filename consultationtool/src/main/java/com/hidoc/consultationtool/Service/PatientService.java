@@ -4,6 +4,8 @@ import com.hidoc.consultationtool.Entity.Patient;
 import com.hidoc.consultationtool.Repository.PatientRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PatientService {
 
@@ -27,15 +29,31 @@ public class PatientService {
         return patientRepository.save(patient);
     }
 
-    public Patient findPatientDetailsByName(String name)
+    public List<Patient> findPatientDetailsByName(String name)
     {
         return patientRepository.findByName(name);
     }
 
-    public Patient findPatientDetailsById(Long Id)
+    public Patient findPatientDetailsById(Long id)
     {
-        return patientRepository.findById(Id)
+        return patientRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("Patient with that id not found"));
+    }
+
+    public void deletePatientbyId(Long id)
+    {
+        patientRepository.delete(findPatientDetailsById(id));
+    }
+
+    public Patient updatePatient(Long id, Patient patient)
+    {
+        return patientRepository.findById(id)
+                .map(existing ->{
+                    existing.setName(patient.getName());
+                    existing.setAddress(patient.getAddress());
+                    return patientRepository.save(existing);
+                })
+                .orElseThrow(() -> new RuntimeException("Update Failed"));
     }
 
 }
