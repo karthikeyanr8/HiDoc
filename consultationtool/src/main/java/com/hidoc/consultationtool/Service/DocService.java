@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class FindDocService {
+public class DocService {
 
     private final DocRepository docRepository;
 
-    public FindDocService(DocRepository docRepository) {
+    public DocService(DocRepository docRepository) {
         this.docRepository = docRepository;
     }
 
@@ -42,6 +42,7 @@ public class FindDocService {
                     existing.setAge(doctor.getAge());
                     existing.setDesignation(doctor.getDesignation());
                     existing.setSpecialization(doctor.getSpecialization());
+                    existing.setStatus(doctor.getStatus());
                     return docRepository.save(existing);
                 })
                 .orElseThrow(() -> new RuntimeException("Update Doctor Details Failed"));
