@@ -1,6 +1,7 @@
 package com.hidoc.consultationtool.Service;
 
 import com.hidoc.consultationtool.Entity.Patient;
+import com.hidoc.consultationtool.ExceptionHandling.PatientNotFoundException;
 import com.hidoc.consultationtool.Repository.PatientRepository;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,7 @@ public class PatientService {
     public Patient findPatientDetailsById(Long id)
     {
         return patientRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Patient with that id not found"));
+                .orElseThrow(()->new PatientNotFoundException("Patient with that id not found"));
     }
 
     public void deletePatientbyId(Long id)
@@ -53,7 +54,7 @@ public class PatientService {
                     existing.setAddress(patient.getAddress());
                     return patientRepository.save(existing);
                 })
-                .orElseThrow(() -> new RuntimeException("Update Failed"));
+                .orElseThrow(() -> new PatientNotFoundException("Update Failed"));
     }
 
 }

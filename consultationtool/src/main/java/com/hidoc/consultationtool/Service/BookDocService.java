@@ -4,9 +4,13 @@ import com.hidoc.consultationtool.Entity.Booking;
 import com.hidoc.consultationtool.Entity.Doctor;
 import com.hidoc.consultationtool.Entity.DoctorStatus;
 import com.hidoc.consultationtool.Entity.Patient;
+import com.hidoc.consultationtool.ExceptionHandling.BookingNotFoundException;
+import com.hidoc.consultationtool.ExceptionHandling.DoctorNotFoundException;
 import com.hidoc.consultationtool.Repository.BookingRepository;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BookDocService {
@@ -24,7 +28,7 @@ public class BookDocService {
         Doctor doctor = docService.findDocById(doc_id);
 
         if(doctor.getStatus() != DoctorStatus.AVAILABLE){
-            throw new RuntimeException("Doctor is not Available!");
+            throw new DoctorNotFoundException("Doctor is not Available");
         }
 
         Patient patient = patientService.findPatientDetailsById(pat_id);
@@ -33,5 +37,20 @@ public class BookDocService {
         booking.setPatient(patient);
         booking.setTimeFrame(timeFrame);
         return bookingRepository.save(booking);
+    }
+
+    public Booking fetchBookingById(Long bookingId)
+    {
+        return bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new BookingNotFoundException("Booking not found with this bookingId"));
+    }
+
+    public List<Booking> searchBookingByPatientId(Long pat_id)
+    {
+        return bookingRepository.findByPatientId(pat_id);
+    }
+    public List<Booking> searchBookingByDoctorId(Long doc_id)
+    {
+        return bookingRepository.findByDoctorId(doc_id);
     }
 }

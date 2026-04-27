@@ -4,10 +4,9 @@ import com.hidoc.consultationtool.Entity.Booking;
 import com.hidoc.consultationtool.Entity.BookingRequest;
 import com.hidoc.consultationtool.Service.BookDocService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/booking")
@@ -23,5 +22,16 @@ public class BookingController {
     public Booking doctorBooking(@RequestBody BookingRequest bookingRequest)
     {
         return bookDocService.bookDoctor(bookingRequest.getDoctorId(), bookingRequest.getPatientId(), bookingRequest.getTimeFrame());
+    }
+
+    @GetMapping("/patient/{id}")
+    public List<Booking> getBookingFromPatId(@PathVariable Long id)
+    {
+        return bookDocService.searchBookingByPatientId(id);
+    }
+    @GetMapping("/doctor/{id}")
+    public List<Booking> getBookingFromDocId(@PathVariable Long id)
+    {
+        return bookDocService.searchBookingByDoctorId(id);
     }
 }

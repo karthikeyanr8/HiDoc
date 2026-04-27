@@ -1,6 +1,7 @@
 package com.hidoc.consultationtool.Service;
 
 import com.hidoc.consultationtool.Entity.Doctor;
+import com.hidoc.consultationtool.ExceptionHandling.DoctorNotFoundException;
 import com.hidoc.consultationtool.Repository.DocRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class DocService {
 
     public Doctor findDocById(long Id) {
         return docRepository.findById(Id)
-                .orElseThrow(() -> new RuntimeException("Doctor with this ID is not found!"));
+                .orElseThrow(() -> new DoctorNotFoundException("Doctor with this ID is not found!"));
     }
 
     public List<Doctor> findDocByDesignation(String designation) {
@@ -45,7 +46,7 @@ public class DocService {
                     existing.setStatus(doctor.getStatus());
                     return docRepository.save(existing);
                 })
-                .orElseThrow(() -> new RuntimeException("Update Doctor Details Failed"));
+                .orElseThrow(() -> new DoctorNotFoundException("Update Doctor Details Failed"));
     }
 
     public void deleteDoc(Long id){
