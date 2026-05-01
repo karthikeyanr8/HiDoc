@@ -34,4 +34,5 @@ public class BookingController {
     {
         return bookDocService.searchBookingByDoctorId(id);
     }
+
 }

@@ -1,9 +1,6 @@
 package com.hidoc.consultationtool.Service;
 
-import com.hidoc.consultationtool.Entity.Booking;
-import com.hidoc.consultationtool.Entity.Doctor;
-import com.hidoc.consultationtool.Entity.DoctorStatus;
-import com.hidoc.consultationtool.Entity.Patient;
+import com.hidoc.consultationtool.Entity.*;
 import com.hidoc.consultationtool.ExceptionHandling.BookingNotFoundException;
 import com.hidoc.consultationtool.ExceptionHandling.DoctorNotFoundException;
 import com.hidoc.consultationtool.Repository.BookingRepository;
@@ -39,18 +36,15 @@ public class BookDocService {
         return bookingRepository.save(booking);
     }
 
-    public Booking fetchBookingById(Long bookingId)
-    {
+    public Booking fetchBookingById(Long bookingId) {
         return bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new BookingNotFoundException("Booking not found with this bookingId"));
     }
 
-    public List<Booking> searchBookingByPatientId(Long pat_id)
-    {
+    public List<Booking> searchBookingByPatientId(Long pat_id) {
         return bookingRepository.findByPatientId(pat_id);
     }
-    public List<Booking> searchBookingByDoctorId(Long doc_id)
-    {
+    public List<Booking> searchBookingByDoctorId(Long doc_id) {
         return bookingRepository.findByDoctorId(doc_id);
     }
 }
